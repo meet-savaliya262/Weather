@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+/* Reset and basic font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Full-page background */
+body, html {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 100%);
+}
+
+/* Card container */
+.weather-container {
+  background: #ffffff;
+  border-radius: 25px;
+  padding: 40px 35px;
+  width: 320px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.weather-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+/* Heading */
+.weather-container h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.search-box input[type="text"] {
+  flex: 1;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-right: none;
+  border-radius: 25px 0 0 25px;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-box button {
+  padding: 12px 20px;
+  border: 2px solid #ddd;
+  border-left: none;
+  border-radius: 0 25px 25px 0;
+  background-color: #6c63ff;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-box button:hover {
+  background-color: #5952d4;
+}
+
+/* Weather info */
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.weather-info .temperature {
+  font-size: 48px;
+  font-weight: 700;
+  color: #333;
+}
+
+.weather-info .city {
+  font-size: 22px;
+  font-weight: 600;
+  color: #555;
+}
+
+.weather-info .description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  color: #777;
+}
+
+.weather-info .description img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 5px;
+}
+
+/* Error message */
+.error-message {
+  color: #ff4c4c;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 500px) {
+  .weather-container {
+    padding: 25px 20px;
+    width: 90%;
+  }
+
+  .weather-info .temperature {
+    font-size: 38px;
+  }
+
+  .weather-info .city {
+    font-size: 20px;
+  }
+
+  .weather-info .description img {
+    width: 50px;
+    height: 50px;
+  }
+}
+</style>
+
+</head>
+<body>
+  <div class="weather-container">
+    <h1>Weather App</h1>
+
+    <form class="search-box" method="post">
+    {% csrf_token %}
+      <input type="text" name="city" placeholder="Enter city" list="cities">
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="weather-info">
+      <div class="temperature">{{temp}}</div>
+      <div class="city">{{city}}</div>
+      <div class="description">
+        <img src="https://openweathermap.org/img/w/{{icon}}.png" alt="clear sky">
+        {{description}}
+        <span>{{day}}</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
